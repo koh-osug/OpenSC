@@ -411,9 +411,9 @@ AC_FUNC_STAT
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([ \
 	getpass gettimeofday getline memset mkdir \
-	strdup strerror \
-	strlcpy strlcat strnlen sigaction
+	strnlen sigaction
 ])
+AC_CHECK_DECLS([strlcpy, strlcat], [], [], [[#include <string.h>]])
 AC_CHECK_SIZEOF(void *)
 if test "${ac_cv_sizeof_void_p}" = 8; then
 	LIBRARY_BITNESS="64"
