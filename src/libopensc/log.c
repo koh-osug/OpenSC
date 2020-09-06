@@ -44,6 +44,9 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
+#ifdef __ANDROID__
+#include <sysroot/usr/include/android/log.h>
+#endif
 
 #include "internal.h"
 
@@ -95,6 +98,11 @@ static void sc_do_log_va(sc_context_t *ctx, int level, const char *file, int lin
 #endif
 	if (ctx->debug_file == NULL)
 		return;
+
+#ifdef __ANDROID__
+    __android_log_vprint(ANDROID_LOG_DEBUG, "OpenSC", format, args);
+	return;
+#endif
 
 #ifdef _WIN32
 	GetLocalTime(&st);
