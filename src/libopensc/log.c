@@ -86,8 +86,13 @@ static void sc_do_log_va(sc_context_t *ctx, int level, const char *file, int lin
 	char time_string[40];
 #endif
 
+#ifndef __ANDROID__
 	if (!ctx || ctx->debug < level)
 		return;
+#else
+	if (!ctx || ctx->debug > level)
+			return;
+#endif
 
 #ifdef _WIN32
 	/* In Windows, file handles can not be shared between DLL-s, each DLL has a

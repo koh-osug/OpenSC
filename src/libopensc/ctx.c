@@ -42,6 +42,10 @@
 #include "internal.h"
 #include "sc-ossl-compat.h"
 
+#ifdef __ANDROID__
+#include <sysroot/usr/include/android/log.h>
+#endif
+
 static int ignored_reader(sc_context_t *ctx, sc_reader_t *reader)
 {
 	if (ctx != NULL && reader != NULL && reader->name != NULL) {
@@ -826,6 +830,7 @@ int sc_context_create(sc_context_t **ctx_out, const sc_context_param_t *parm)
 		return SC_ERROR_OUT_OF_MEMORY;
 	}
 
+
 	ctx->flags = parm->flags;
 	set_defaults(ctx, &opts);
 
@@ -883,8 +888,10 @@ int sc_context_create(sc_context_t **ctx_out, const sc_context_param_t *parm)
 	load_card_drivers(ctx, &opts);
 	load_card_atrs(ctx);
 
+	__android_log_print(ANDROID_LOG_DEBUG, "OpenSC", "sc_context_create j");
 	del_drvs(&opts);
 	sc_ctx_detect_readers(ctx);
+	__android_log_print(ANDROID_LOG_DEBUG, "OpenSC", "sc_context_create k");
 	*ctx_out = ctx;
 
 	return SC_SUCCESS;

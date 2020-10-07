@@ -43,6 +43,10 @@
 
 #include "pace.h"
 
+#ifdef __ANDROID__
+#include <sysroot/usr/include/android/log.h>
+#endif
+
 #ifdef HAVE_PCSCLITE_H
 #if !defined (__MAC_OS_X_VERSION_MIN_REQUIRED) || __MAC_OS_X_VERSION_MIN_REQUIRED < 101000
 #define HAVE_PCSCLITE 1
