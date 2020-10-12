@@ -24,7 +24,7 @@ export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
 export STRIP=$TOOLCHAIN/bin/$TARGET-strip
 echo "Configuring ..."
 cp $HOME/projects/openssl/libcrypto.so ./libcrypto.so
-# Android BGradle does not supported versioned
+# Android Gradle does not supported versioned soname
 patchelf --set-soname libcrypto.so libcrypto.so
-./configure --with-pcsc-provider=libpcscandroid.so PCSC_CFLAGS="-I$HOME/projects/pcscandroid/src/include" PCSC_LIBS="-L$HOME/projects/pcscandroid/src -lpcscandroid" OPENSSL_LIBS="-L$PWD -lcrypto" OPENSSL_CFLAGS="-I$HOME/projects/openssl/include" LDFLAGS="-llog" CPPFLAGS="-I$NDK -Wno-deprecated-declarations" --host $TARGET --prefix=/usr --sysconfdir=/etc/opensc
+./configure --with-pcsc-provider=libPCSCAndroid.so PCSC_CFLAGS="-I$HOME/projects/PCSCAndroid/lib/src/main/cpp/include" PCSC_LIBS="-L$HOME/projects/PCSCAndroid/lib/build/intermediates/library_and_local_jars_jni/debug/jni/arm64-v8a -lPCSCAndroid" OPENSSL_LIBS="-L$PWD -lcrypto" OPENSSL_CFLAGS="-I$HOME/projects/openssl/include" LDFLAGS="-llog" CPPFLAGS="-I$NDK -Wno-deprecated-declarations" --host $TARGET --prefix=/usr --sysconfdir=/etc/opensc
 make
