@@ -105,7 +105,11 @@ static void sc_do_log_va(sc_context_t *ctx, int level, const char *file, int lin
 		return;
 
 #ifdef __ANDROID__
-    __android_log_vprint(ANDROID_LOG_DEBUG, "OpenSC", format, args);
+	int msg_len = strlen(format) + 128;
+	char * msg = malloc(msg_len);
+	vsnprintf(msg, msg_len, format, args);
+    __android_log_print(ANDROID_LOG_DEBUG, "OpenSC", "%s:%d:%s: %s", file, line, func ? func : "", msg);
+    free(msg);
 	return;
 #endif
 
